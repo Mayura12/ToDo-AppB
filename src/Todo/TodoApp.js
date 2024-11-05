@@ -1,8 +1,7 @@
-// src/components/TodoApp.js
-import React, { useState } from 'react';
-import { v4 as uuidv4 } from 'uuid';
-import Task from './Task';
-import './TodoApp.css';
+import React, { useState } from "react";
+import { v4 as uuidv4 } from "uuid";
+import Task from "./Task";
+import "./TodoApp.css";
 
 const TodoApp = () => {
   const [tasks, setTasks] = useState([]);
@@ -16,7 +15,12 @@ const TodoApp = () => {
     const addSubTaskRecursively = (tasks) =>
       tasks.map((task) => {
         if (task.id === taskId) {
-          const newSubTask = { id: uuidv4(), text: "", completed: false, children: [] };
+          const newSubTask = {
+            id: uuidv4(),
+            text: "",
+            completed: false,
+            children: [],
+          };
           return { ...task, children: [...(task.children || []), newSubTask] };
         } else if (task.children) {
           return { ...task, children: addSubTaskRecursively(task.children) };
@@ -58,7 +62,10 @@ const TodoApp = () => {
         if (task.id === taskId) {
           return { ...task, completed: !task.completed };
         } else if (task.children) {
-          return { ...task, children: toggleCompleteRecursively(task.children) };
+          return {
+            ...task,
+            children: toggleCompleteRecursively(task.children),
+          };
         }
         return task;
       });
