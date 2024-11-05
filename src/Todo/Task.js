@@ -8,8 +8,17 @@ const Task = ({
   onDelete,
   onToggleComplete,
   level = 1,
+  maxNestingLevel,
 }) => {
   const [isHovered, setIsHovered] = useState(false);
+
+  const handleToggleComplete = () => {
+    if (task.text.trim() === "") {
+      alert("Task cannot be marked complete if the description is empty.");
+      return;
+    }
+    onToggleComplete(task.id);
+  };
 
   return (
     <div
@@ -21,7 +30,7 @@ const Task = ({
       <input
         type="checkbox"
         checked={task.completed}
-        onChange={() => onToggleComplete(task.id)}
+        onChange={handleToggleComplete}
       />
       <input
         type="text"
@@ -29,10 +38,13 @@ const Task = ({
         onChange={(e) => onUpdate(task.id, e.target.value)}
         className={task.completed ? "completed" : ""}
       />
-      {isHovered && level < 3 && (
+
+      {/* Show the add sub-task button if within the allowed nesting level */}
+      {isHovered && level < maxNestingLevel && (
         <button onClick={() => onAddSubTask(task.id)}>+ Sub-task</button>
       )}
-      <button onClick={() => onDelete(task.id)}>Delete</button>
+
+      <button onClick={() => onDelete(task.id)} className="delete-btn">Delete</button>
 
       {task.children &&
         task.children.map((subTask) => (
@@ -44,6 +56,7 @@ const Task = ({
             onDelete={onDelete}
             onToggleComplete={onToggleComplete}
             level={level + 1}
+            maxNestingLevel={maxNestingLevel}
           />
         ))}
     </div>
