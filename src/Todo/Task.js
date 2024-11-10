@@ -39,12 +39,17 @@ const Task = ({
         className={task.completed ? "completed" : ""}
       />
 
-      {/* Show the add sub-task button if within the allowed nesting level */}
-      {isHovered && level < maxNestingLevel && (
-        <button onClick={() => onAddSubTask(task.id)}>+ Sub-task</button>
-      )}
+      {/* Show the add sub-task button if within allowed nesting level, task text is not empty, and task is not completed */}
+      {isHovered &&
+        level < maxNestingLevel &&
+        task.text.trim() &&
+        !task.completed && (
+          <button onClick={() => onAddSubTask(task.id)}>+ Sub-task</button>
+        )}
 
-      <button onClick={() => onDelete(task.id)} className="delete-btn">Delete</button>
+      <button onClick={() => onDelete(task.id)} className="delete-btn">
+        Delete
+      </button>
 
       {task.children &&
         task.children.map((subTask) => (
