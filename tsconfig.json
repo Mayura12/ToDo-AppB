@@ -1,0 +1,11 @@
+{
+  "compilerOptions": {
+    "target": "es5",
+    "lib": ["dom", "es2015"],
+    "jsx": "react-jsx",
+    "allowJs": true,
+    "strict": true,
+    "esModuleInterop": true
+  },
+  "include": ["src", "node_modules/@types"]
+}

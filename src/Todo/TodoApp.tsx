@@ -1,28 +1,30 @@
 import React, { useState } from "react";
-import { v4 as uuidv4 } from "uuid";
+import { v4 as uuidv4 } from 'uuid';
 import Task from "./Task";
 import "./TodoApp.css";
 
-const TodoApp = () => {
-  const [tasks, setTasks] = useState([]);
-  const [maxNestingLevel, setMaxNestingLevel] = useState(3);
+interface TaskType {
+  id: string;
+  text: string;
+  completed: boolean;
+  children: TaskType[];
+}
+
+const TodoApp: React.FC = () => {
+  const [tasks, setTasks] = useState<TaskType[]>([]);
+  const [maxNestingLevel, setMaxNestingLevel] = useState<number>(3);
 
   const addTask = () => {
-    const newTask = { id: uuidv4(), text: "", completed: false, children: [] };
+    const newTask: TaskType = { id: uuidv4(), text: "", completed: false, children: [] };
     setTasks([...tasks, newTask]);
   };
 
-  const addSubTask = (taskId) => {
-    const addSubTaskRecursively = (tasks) =>
+  const addSubTask = (taskId: string) => {
+    const addSubTaskRecursively = (tasks: TaskType[]): TaskType[] =>
       tasks.map((task) => {
         if (task.id === taskId) {
-          const newSubTask = {
-            id: uuidv4(),
-            text: "",
-            completed: false,
-            children: [],
-          };
-          return { ...task, children: [...(task.children || []), newSubTask] };
+          const newSubTask: TaskType = { id: uuidv4(), text: "", completed: false, children: [] };
+          return { ...task, children: [...task.children, newSubTask] };
         } else if (task.children) {
           return { ...task, children: addSubTaskRecursively(task.children) };
         }
@@ -32,8 +34,8 @@ const TodoApp = () => {
     setTasks(addSubTaskRecursively(tasks));
   };
 
-  const updateTask = (taskId, newText) => {
-    const updateTaskRecursively = (tasks) =>
+  const updateTask = (taskId: string, newText: string) => {
+    const updateTaskRecursively = (tasks: TaskType[]): TaskType[] =>
       tasks.map((task) => {
         if (task.id === taskId) {
           return { ...task, text: newText };
@@ -46,8 +48,8 @@ const TodoApp = () => {
     setTasks(updateTaskRecursively(tasks));
   };
 
-  const deleteTask = (taskId) => {
-    const deleteTaskRecursively = (tasks) =>
+  const deleteTask = (taskId: string) => {
+    const deleteTaskRecursively = (tasks: TaskType[]): TaskType[] =>
       tasks.filter((task) => {
         if (task.id === taskId) return false;
         if (task.children) task.children = deleteTaskRecursively(task.children);
@@ -57,16 +59,13 @@ const TodoApp = () => {
     setTasks(deleteTaskRecursively(tasks));
   };
 
-  const toggleComplete = (taskId) => {
-    const toggleCompleteRecursively = (tasks) =>
+  const toggleComplete = (taskId: string) => {
+    const toggleCompleteRecursively = (tasks: TaskType[]): TaskType[] =>
       tasks.map((task) => {
         if (task.id === taskId) {
           return { ...task, completed: !task.completed };
         } else if (task.children) {
-          return {
-            ...task,
-            children: toggleCompleteRecursively(task.children),
-          };
+          return { ...task, children: toggleCompleteRecursively(task.children) };
         }
         return task;
       });

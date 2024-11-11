@@ -1,7 +1,24 @@
 import React, { useState } from "react";
 import "./Task.css";
 
-const Task = ({
+interface TaskType {
+  id: string;
+  text: string;
+  completed: boolean;
+  children: TaskType[];
+}
+
+interface TaskProps {
+  task: TaskType;
+  onAddSubTask: (taskId: string) => void;
+  onUpdate: (taskId: string, newText: string) => void;
+  onDelete: (taskId: string) => void;
+  onToggleComplete: (taskId: string) => void;
+  level?: number;
+  maxNestingLevel: number;
+}
+
+const Task: React.FC<TaskProps> = ({
   task,
   onAddSubTask,
   onUpdate,
