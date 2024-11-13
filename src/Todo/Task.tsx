@@ -61,7 +61,7 @@ const Task: React.FC<TaskProps> = ({
         level < maxNestingLevel &&
         task.text.trim() &&
         !task.completed && (
-          <button onClick={() => onAddSubTask(task.id)}>+ Sub-task</button>
+          <button onClick={() => onAddSubTask(task.id)}>{'+ Sub-task'}</button>
         )}
 
       <button onClick={() => onDelete(task.id)} className="delete-btn">
