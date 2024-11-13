@@ -1,0 +1,64 @@
+.todo-app {
+  font-family: Arial, sans-serif;
+  max-width: 600px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.todo-app h1 {
+  font-size: 24px;
+  color: #333;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.todo-app button {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 8px 12px;
+  margin: 5px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.todo-app button:hover {
+  background-color: #45a049;
+}
+
+.clear-button {
+  background-color: #f44336;
+}
+
+.clear-button:hover {
+  background-color: #e53935;
+}
+
+.task-list {
+  margin-top: 20px;
+}
+
+.nesting-level-input {
+  margin-top: 15px;
+  display: flex;
+  align-items: center;
+}
+
+.nesting-level-input label {
+  margin-right: 10px;
+  font-size: 14px;
+  color: #555;
+}
+
+.nesting-level-input input[type="number"] {
+  width: 50px;
+  padding: 5px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  text-align: center;
+}
